@@ -20,10 +20,20 @@ cmake -DIqsAppUtest=OFF .
 make -j 4
 ```
 
+**NOTE:** To enable all functionalities, update git to its 2.17+ version.
+
 
 ### Circuit for the example
 
-This simple example implement the gearbox circuit from:  
-[1]  Wiebe, N. \& Kliuchnikov, V. "Floating point representations in quantum circuit synthesis" New J. Phys. 15, 093041 (2013)  
-that is open access at this
-[link](http://iopscience.iop.org/article/10.1088/1367-2630/15/9/093041/meta).
+This simple example implement the gearbox circuit from:
+
+   Wiebe, N. \& Kliuchnikov, V.
+   *Floating point representations in quantum circuit synthesis*
+   [New J. Phys. 15, 093041 (2013)](http://iopscience.iop.org/article/10.1088/1367-2630/15/9/093041/meta)
+
+As an interesting exercise, consider extending the gearbox circuit to its
+conditional form, following:
+
+   Guerreschi, G. G.
+   *Repeat-Until-Success circuits with fixed-point oblivious amplitude amplification*
+   [Phys. Rev. A 99, 022306 (2019)](https://arxiv.org/abs/1808.02900)
