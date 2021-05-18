@@ -32,33 +32,35 @@ int main(int argc, char **argv)
 
   // First we prepare a non-trivial state for the data qubit.
 
-  double phi = 0.34;
+  double phi = 0.34*M_PI;
   psi.ApplyRotationX(data_qubit, phi);
 
   // Then we perform the gearbox circuit from:
   // https://iopscience.iop.org/article/10.1088/1367-2630/15/9/093041/meta
 
-  double r;
+  double theta = 0.71*M_PI;
+  double probability, r;
   while (true)
   {
       psi.ApplyRotationX(ancilla_qubit, theta);
       psi.ApplyCPauliX(ancilla_qubit, data_qubit);
       psi.ApplyPauliZ(ancilla_qubit);
-      psi.ApplySqrtPauliZ(ancilla_qubit);
+      psi.ApplyPauliSqrtZ(ancilla_qubit);
       psi.ApplyRotationX(ancilla_qubit, -theta);
 
       // Measure ancilla and collapse state accordingly.
 
-      double probability = psi.GetProbability(ancilla_qubit);
-      assert(1-probability == std::pow(std::cos(theta), 4) + std::pow(std::cos(theta), 4)
+      probability = psi.GetProbability(ancilla_qubit);
+      double expected_prob_succ = std::pow(std::cos(theta/2), 4) + std::pow(std::sin(theta/2), 4);
+      assert( std::abs(1-probability - expected_prob_succ) < 1e-10
               && "ERROR: unexpected probability of success");
-      rng.UniformRandomNumbers(&r, 1UL, =0., 1., "state");
-      if (r < probability) {
+      rng.UniformRandomNumbers(&r, 1UL, 0., 1., "state");
+      if (r < probability)
       {
           // Collapse the wavefunction according to qubit 1 being in |1>.
           if (my_rank==0)
               std::cout << "Simulated outcome is 1. Recover and try again.\n";
-          psi.CollapseQubit(measured_qubit, true);
+          psi.CollapseQubit(ancilla_qubit, true);
           psi.Normalize();
           psi.ApplyPauliX(ancilla_qubit);
           psi.ApplyRotationX(data_qubit, M_PI/2);
@@ -68,7 +70,7 @@ int main(int argc, char **argv)
           // Collapse the wavefunction according to qubit 1 being in |0>
           if (my_rank==0)
               std::cout << "Simulated outcome is 0. Success!\n";
-          psi.CollapseQubit(measured_qubit,false);
+          psi.CollapseQubit(ancilla_qubit,false);
           psi.Normalize();
           break;
       }

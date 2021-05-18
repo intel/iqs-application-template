@@ -1,8 +1,8 @@
 # Add Intel Quantum Simulator as submodule
 
 execute_process (
-    COMMAND bash -c "git submodule add -b master git@github.com:iqusoft/intel-qs.git ${PROJECT_SOURCE_DIR}/extern/intel-qs"
-    COMMAND bash -c "git submodule update --init"
+    COMMAND bash -c "cd ..; git submodule add -b master git@github.com:iqusoft/intel-qs.git ${PROJECT_SOURCE_DIR}/extern/intel-qs"
+    COMMAND bash -c "cd ..; git submodule update --init"
 )
 
 # Build external project without MPI, unit tests, and Python bindings.
@@ -22,9 +22,10 @@ message(STATUS "CMAKE_BINARY_DIR = ${CMAKE_BINARY_DIR}")
 message(STATUS "CMAKE_CURRENT_SOURCE_DIR = ${CMAKE_CURRENT_SOURCE_DIR}")
 
 ################################################################################
+
 # Main executable of this repo, possibly including other .cpp files in <repo>/src/
 
-add_executable(gearbox src/main_gearbox.cpp)
+add_executable(gearbox main_gearbox.cpp)
 target_link_libraries(gearbox PUBLIC iqs)
 target_include_directories(gearbox PRIVATE
                            "${PROJECT_SOURCE_DIR}/include"
@@ -35,14 +36,4 @@ target_include_directories(gearbox PRIVATE
 set_target_properties(gearbox PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
-
-#target_include_directories(gearbox
-#    PUBLIC
-#        $<INSTALL_INTERFACE:${CMAKE_SOURCE_DIR}/include>
-#        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
-#    PRIVATE
-#    ${CMAKE_CURRENT_SOURCE_DIR}
-#)
-
-################################################################################
 
