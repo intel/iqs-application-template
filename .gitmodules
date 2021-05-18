@@ -2,7 +2,3 @@
     path = extern/intel-qs
     url = git@github.com:iqusoft/intel-qs.git
     branch = master
-[submodule "/nfs_home/giangiac/iqs-application-template/extern/intel-qs"]
-	path = /nfs_home/giangiac/iqs-application-template/extern/intel-qs
-	url = git@github.com:iqusoft/intel-qs.git
-	branch = master

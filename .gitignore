@@ -1,3 +1,5 @@
 # Build foder
 build/
 *.o
+
+.gitmodules
