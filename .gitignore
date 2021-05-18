@@ -1,3 +1,6 @@
+# Build foder
+build/*
+
 # Prerequisites
 *.d
 

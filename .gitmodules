@@ -1,0 +1,4 @@
+[submodule "extern/intel-qs"]
+    path = extern/intel-qs
+    url = git@github.com:iqusoft/intel-qs.git
+    branch = master
