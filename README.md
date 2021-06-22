@@ -16,7 +16,7 @@ To install it, once in the main repo dir type:
 ```bash
 mkdir build
 cd build
-cmake -DIqsAppUtest=OFF .
+cmake -DIqsAppUtest=OFF ..
 make -j 4
 ```
 
